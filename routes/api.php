@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\UserController;
 
 Route::post('auth/login', [AuthController::class, 'login']);
@@ -26,5 +28,22 @@ Route::prefix('posts')->group(function () {
     Route::delete('/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
 
+// Categories Routes
+Route::prefix('categories')->group(function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/{category}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::post('/', [CategoryController::class, 'store'])->name('categories.store');
+    Route::put('/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+});
+
+// Tags Routes
+Route::prefix('tags')->group(function () {
+    Route::get('/', [TagController::class, 'index'])->name('tags.index');
+    Route::get('/{tag}', [TagController::class, 'show'])->name('tags.show');
+    Route::post('/', [TagController::class, 'store'])->name('tags.store');
+    Route::put('/{tag}', [TagController::class, 'update'])->name('tags.update');
+    Route::delete('/{tag}', [TagController::class, 'destroy'])->name('tags.destroy');
+});
 });
 Route::get('posts/search', [PostController::class, 'search']);
