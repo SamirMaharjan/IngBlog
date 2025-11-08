@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\UserController;
 
 Route::post('auth/login', [AuthController::class, 'login']);
@@ -15,4 +16,15 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
+
+// Posts Routes
+Route::prefix('posts')->group(function () {
+    Route::get('/', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/{post}', [PostController::class, 'show'])->name('posts.show');
+    Route::post('/', [PostController::class, 'store'])->name('posts.store');
+    Route::put('/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
+
+});
+Route::get('posts/search', [PostController::class, 'search']);
