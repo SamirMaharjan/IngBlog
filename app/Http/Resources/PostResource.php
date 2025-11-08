@@ -14,8 +14,12 @@ class PostResource extends JsonResource
                 'id'=>$this->author->id ?? null,
                 'name'=>$this->author->name ?? null
             ],
-            'category'=>$this->category,
-            'tags'=>$this->tags,
+            'category' => $this->category ? [
+                'id'   => $this->category->id,
+                'name' => $this->category->name,
+            ] : null,
+
+            'tags' => $this->tags->map(fn($tag) => $tag->name),
             'comments'=>$this->whenLoaded('comments')
         ];
     }
