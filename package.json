@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "@tailwindcss/postcss": "^4.1.17",
+        "@tailwindcss/vite": "^4.0.0",
+        "@vitejs/plugin-react": "^5.1.0",
+        "autoprefixer": "^10.4.21",
+        "axios": "^1.13.2",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^2.0.0",
+        "postcss": "^8.5.6",
+        "tailwindcss": "^4.1.17",
+        "vite": "^7.1.12"
+    },
+    "dependencies": {
+        "@shopify/polaris": "^13.9.5",
+        "@shopify/polaris-icons": "^9.3.1",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-google-recaptcha": "^3.1.0",
+        "react-router-dom": "^7.9.5"
+    }
+}
