@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\UserController;
@@ -45,5 +46,14 @@ Route::prefix('tags')->group(function () {
     Route::put('/{tag}', [TagController::class, 'update'])->name('tags.update');
     Route::delete('/{tag}', [TagController::class, 'destroy'])->name('tags.destroy');
 });
+// Comments Routes
+Route::prefix('comments')->group(function () {
+    Route::get('/', [CommentController::class, 'index'])->name('comments.index');
+    Route::get('/{comment}', [CommentController::class, 'show'])->name('comments.show');
+    Route::post('/', [CommentController::class, 'store'])->name('comments.store');
+    Route::put('/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+});
+
 });
 Route::get('posts/search', [PostController::class, 'search']);
