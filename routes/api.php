@@ -10,6 +10,7 @@ use App\Http\Controllers\API\UserController;
 
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('posts/search', [PostController::class, 'search']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::prefix('users')->group(function () {
@@ -27,6 +28,7 @@ Route::prefix('posts')->group(function () {
     Route::post('/', [PostController::class, 'store'])->name('posts.store');
     Route::put('/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+    
 });
 
 // Categories Routes
@@ -56,4 +58,4 @@ Route::prefix('comments')->group(function () {
 });
 
 });
-Route::get('posts/search', [PostController::class, 'search']);
+
