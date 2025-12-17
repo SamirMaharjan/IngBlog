@@ -41,4 +41,10 @@ class PostPublished implements ShouldBroadcast
     {
         return 'PostPublished'; // matches your frontend listen('.PostPublished')
     }
+     public function broadcastWith()
+    {
+        return [
+            'post' => $this->post->load('author'),
+        ];
+    }
 }

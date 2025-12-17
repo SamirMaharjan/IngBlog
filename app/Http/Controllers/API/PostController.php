@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
+use App\Models\Tag;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 
@@ -39,7 +40,8 @@ class PostController extends Controller
         if(!empty($data['tags'])){
             // attach tags (simple create/find)
             foreach($data['tags'] as $t){
-                $tag = \App\Models\Tag::firstOrCreate(['name'=>$t,'slug'=>\Str::slug($t)]);
+               $tag = Tag::firstOrCreate( ['name' => $t], // Search only by name ['slug' => \Str::slug($t)] // Values to set if creating );
+                ['slug' => \Str::slug($t)] );
                 $post->tags()->attach($tag->id);
             }
         }
@@ -96,6 +98,7 @@ class PostController extends Controller
             ])
             ->with(['author','category','tags'])
             ->paginate($perPage);
+            
         return PostResource::collection($posts);
     }
 }
