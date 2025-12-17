@@ -7,8 +7,12 @@ use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\UserController;
+use Illuminate\Support\Facades\Broadcast;
 
-Route::post('auth/login', [AuthController::class, 'login']);
+Broadcast::routes([
+    // 'middleware' => ['auth:sanctum'], // or auth:web
+]);
+Route::post('auth/login', [AuthController::class, 'login'])->middleware('throttle:login');
 Route::post('auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('posts/search', [PostController::class, 'search']);
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../css/app.css';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
@@ -14,8 +14,38 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from './contexts/AuthContext';
+// import { useEcho } from "@laravel/echo-react";
+import echo from './echo'
+import {attachUserListeners, detachUserListeners} from './echo-listeners';
+import useAuth from './hooks/useAuth';
 
 export default function App(){
+ const { user } = useAuth(); // however you store auth state
+  console.log(user);
+  
+  useEffect(() => {
+    if (!user) {
+      detachUserListeners()
+      return
+    }
+
+    attachUserListeners(user)
+
+    return () => {
+      detachUserListeners()
+    }
+  }, [user])
+
+  //   useEffect(() => {
+  //   const channel = echo.private('post-published')
+  //     .listen('.PostPublished', (e) => {
+  //       console.log('Post published:', e); // log the event
+  //     });
+
+  //   return () => {
+  //     echo.leave('private-post-published'); // cleanup on unmount
+  //   };
+  // }, []);
   return (
     <Layout>
       <AuthProvider>

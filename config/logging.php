@@ -126,6 +126,12 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        'login' => [
+        'driver' => 'daily',
+        'path' => storage_path('logs/login-attempts.log'),
+        'level' => 'info',
+        'days' => 14, // keep logs for 14 days
+    ],
 
     ],
 
