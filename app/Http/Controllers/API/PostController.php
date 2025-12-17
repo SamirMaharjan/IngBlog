@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers\API;
+
+use App\Events\PostPublished;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
@@ -19,6 +21,7 @@ class PostController extends Controller
                 AllowedFilter::scope('tag')
             ])
             ->with(['author','category','tags'])
+            ->orderby('id', 'desc')
             ->paginate($perPage);
         return PostResource::collection($posts);
     }
@@ -32,6 +35,7 @@ class PostController extends Controller
         ]);
         $data['user_id'] = $request->user()->id;
         $post = Post::create($data);
+        // dump($data['tags']);
         if(!empty($data['tags'])){
             // attach tags (simple create/find)
             foreach($data['tags'] as $t){
@@ -39,7 +43,9 @@ class PostController extends Controller
                 $post->tags()->attach($tag->id);
             }
         }
-        return new PostResource($post->load(['author','category','tags']));
+        // dd($post->load(['author:name,id','category:name,id','tags:name,id']));
+        PostPublished::dispatch($post);
+        return new PostResource($post->load(['author:name,id','category:name,id','tags:name,id']));
     }
 
     public function show(Post $post){
